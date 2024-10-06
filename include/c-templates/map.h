@@ -42,9 +42,9 @@ IFn(TEMPLATE_MAP, bool, empty)(TEMPLATE_MAP* map);
 IFn(TEMPLATE_MAP, size_t, size)(TEMPLATE_MAP* map);
 
 IFn(TEMPLATE_MAP, void, put)(TEMPLATE_MAP* map, K key, V value);
-IFn(TEMPLATE_MAP, V, get)(TEMPLATE_MAP* map, K key);
-IFn(TEMPLATE_MAP, MAP_FIELD*, find)(TEMPLATE_MAP* map, K key);
-IFn(TEMPLATE_MAP, bool, contains)(TEMPLATE_MAP* map, K key);
+IFn(TEMPLATE_MAP, V, get)(TEMPLATE_MAP* map, const K key);
+IFn(TEMPLATE_MAP, MAP_FIELD*, find)(TEMPLATE_MAP* map, const K key);
+IFn(TEMPLATE_MAP, bool, contains)(TEMPLATE_MAP* map, const K key);
 IFn(TEMPLATE_MAP, MAP_FIELD*, begin)(TEMPLATE_MAP* map);
 IFn(TEMPLATE_MAP, MAP_FIELD*, end)(TEMPLATE_MAP* map);
 
