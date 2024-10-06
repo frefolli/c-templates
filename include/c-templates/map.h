@@ -92,7 +92,7 @@ IFn(TEMPLATE_MAP, void, put)(TEMPLATE_MAP* map, K key, V value) {
   }
 }
 
-IFn(TEMPLATE_MAP, V, get)(TEMPLATE_MAP* map, K key) {
+IFn(TEMPLATE_MAP, V, get)(TEMPLATE_MAP* map, const K key) {
   MAP_FIELD* field = Method(TEMPLATE_MAP, find)(map, key);
   if (field != Method(TEMPLATE_MAP, end)(map)) {
     return field->second;
@@ -101,7 +101,7 @@ IFn(TEMPLATE_MAP, V, get)(TEMPLATE_MAP* map, K key) {
   return default_value;
 }
 
-IFn(TEMPLATE_MAP, MAP_FIELD*, find)(TEMPLATE_MAP* map, K key) {
+IFn(TEMPLATE_MAP, MAP_FIELD*, find)(TEMPLATE_MAP* map, const K key) {
   MAP_FIELD* begin = Method(MAP_FIELD_VECTOR, begin)(&map->data);
   MAP_FIELD* end = Method(MAP_FIELD_VECTOR, end)(&map->data);
   MAP_FIELD* it = begin;
@@ -113,7 +113,7 @@ IFn(TEMPLATE_MAP, MAP_FIELD*, find)(TEMPLATE_MAP* map, K key) {
   return end;
 }
 
-IFn(TEMPLATE_MAP, bool, contains)(TEMPLATE_MAP* map, K key) {
+IFn(TEMPLATE_MAP, bool, contains)(TEMPLATE_MAP* map, const K key) {
   return Method(TEMPLATE_MAP, find)(map, key) != Method(TEMPLATE_MAP, end)(map);
 }
 
