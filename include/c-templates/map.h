@@ -62,7 +62,7 @@ IFn(TEMPLATE_MAP, void, clear)(TEMPLATE_MAP* map) {
 }
 
 IFn(TEMPLATE_MAP, TEMPLATE_MAP*, new)() {
-  TEMPLATE_MAP* map = malloc(sizeof(TEMPLATE_MAP));
+  TEMPLATE_MAP* map = (TEMPLATE_MAP*) malloc(sizeof(TEMPLATE_MAP));
   Method(TEMPLATE_MAP, init)(map);
   return map;
 }

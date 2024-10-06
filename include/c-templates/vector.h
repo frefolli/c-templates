@@ -17,6 +17,7 @@ typedef struct {
 } TEMPLATE_VECTOR;
 
 // Declare
+IFn(TEMPLATE_VECTOR, TEMPLATE_VECTOR*, new)();
 IFn(TEMPLATE_VECTOR, void, init)(TEMPLATE_VECTOR* vec);
 IFn(TEMPLATE_VECTOR, void, clean)(TEMPLATE_VECTOR* vec);
 IFn(TEMPLATE_VECTOR, void, clear)(TEMPLATE_VECTOR* vec);
@@ -33,6 +34,12 @@ IFn(TEMPLATE_VECTOR, bool, empty)(TEMPLATE_VECTOR* vec);
 IFn(TEMPLATE_VECTOR, size_t, size)(TEMPLATE_VECTOR* vec);
 
 // Define
+IFn(TEMPLATE_VECTOR, TEMPLATE_VECTOR*, new)() {
+  TEMPLATE_VECTOR* vec = (TEMPLATE_VECTOR*) malloc(sizeof(TEMPLATE_VECTOR));
+  Method(TEMPLATE_VECTOR, init)(vec);
+  return vec;
+}
+
 IFn(TEMPLATE_VECTOR, void, init)(TEMPLATE_VECTOR* vec) {
   vec->size = 1;
   vec->length = 0;
