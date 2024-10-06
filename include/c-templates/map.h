@@ -8,6 +8,9 @@
 #ifndef V
 #error "Template argument V not defined"
 #endif
+#ifndef const_K
+#define const_K const K
+#endif
 #ifndef K_Equals
 #define K_Equals(Ka, Kb) Ka == Kb
 #endif
@@ -42,9 +45,9 @@ IFn(TEMPLATE_MAP, bool, empty)(TEMPLATE_MAP* map);
 IFn(TEMPLATE_MAP, size_t, size)(TEMPLATE_MAP* map);
 
 IFn(TEMPLATE_MAP, void, put)(TEMPLATE_MAP* map, K key, V value);
-IFn(TEMPLATE_MAP, V, get)(TEMPLATE_MAP* map, const K key);
-IFn(TEMPLATE_MAP, MAP_FIELD*, find)(TEMPLATE_MAP* map, const K key);
-IFn(TEMPLATE_MAP, bool, contains)(TEMPLATE_MAP* map, const K key);
+IFn(TEMPLATE_MAP, V, get)(TEMPLATE_MAP* map, const_K key);
+IFn(TEMPLATE_MAP, MAP_FIELD*, find)(TEMPLATE_MAP* map, const_K key);
+IFn(TEMPLATE_MAP, bool, contains)(TEMPLATE_MAP* map, const_K key);
 IFn(TEMPLATE_MAP, MAP_FIELD*, begin)(TEMPLATE_MAP* map);
 IFn(TEMPLATE_MAP, MAP_FIELD*, end)(TEMPLATE_MAP* map);
 
@@ -92,7 +95,7 @@ IFn(TEMPLATE_MAP, void, put)(TEMPLATE_MAP* map, K key, V value) {
   }
 }
 
-IFn(TEMPLATE_MAP, V, get)(TEMPLATE_MAP* map, const K key) {
+IFn(TEMPLATE_MAP, V, get)(TEMPLATE_MAP* map, const_K key) {
   MAP_FIELD* field = Method(TEMPLATE_MAP, find)(map, key);
   if (field != Method(TEMPLATE_MAP, end)(map)) {
     return field->second;
@@ -101,7 +104,7 @@ IFn(TEMPLATE_MAP, V, get)(TEMPLATE_MAP* map, const K key) {
   return default_value;
 }
 
-IFn(TEMPLATE_MAP, MAP_FIELD*, find)(TEMPLATE_MAP* map, const K key) {
+IFn(TEMPLATE_MAP, MAP_FIELD*, find)(TEMPLATE_MAP* map, const_K key) {
   MAP_FIELD* begin = Method(MAP_FIELD_VECTOR, begin)(&map->data);
   MAP_FIELD* end = Method(MAP_FIELD_VECTOR, end)(&map->data);
   MAP_FIELD* it = begin;
@@ -113,7 +116,7 @@ IFn(TEMPLATE_MAP, MAP_FIELD*, find)(TEMPLATE_MAP* map, const K key) {
   return end;
 }
 
-IFn(TEMPLATE_MAP, bool, contains)(TEMPLATE_MAP* map, const K key) {
+IFn(TEMPLATE_MAP, bool, contains)(TEMPLATE_MAP* map, const_K key) {
   return Method(TEMPLATE_MAP, find)(map, key) != Method(TEMPLATE_MAP, end)(map);
 }
 
