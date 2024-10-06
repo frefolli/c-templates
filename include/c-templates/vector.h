@@ -1,5 +1,7 @@
 #include <template.h>
-#ifndef TEMPLATE_VECTOR
+#ifdef TEMPLATE_VECTOR
+#error "Template Vector is already under definition; Depending on the definition of the same Template with different arguments is an anti-pattern. Please reconsider your architectural choices."
+#else
 #ifndef T
 #error "Template argument T not defined"
 #endif

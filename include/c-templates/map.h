@@ -1,5 +1,7 @@
 #include <template.h>
-#ifndef TEMPLATE_MAP
+#ifdef TEMPLATE_MAP
+#error "Template Map is already under definition; Depending on the definition of the same Template with different arguments is an anti-pattern. Please reconsider your architectural choices."
+#else
 #ifndef K
 #error "Template argument K not defined"
 #endif

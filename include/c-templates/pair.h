@@ -1,5 +1,7 @@
 #include <template.h>
-#ifndef TEMPLATE_PAIR
+#ifdef TEMPLATE_PAIR
+#error "Template Pair is already under definition; Depending on the definition of the same Template with different arguments is an anti-pattern. Please reconsider your architectural choices."
+#else
 #ifndef F
 #error "Template argument F not defined"
 #endif
