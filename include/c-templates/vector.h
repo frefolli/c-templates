@@ -27,11 +27,14 @@ IFn(TEMPLATE_VECTOR, void, push_back)(TEMPLATE_VECTOR* vec, T value);
 IFn(TEMPLATE_VECTOR, void, pop_back)(TEMPLATE_VECTOR* vec);
 IFn(TEMPLATE_VECTOR, T*,   begin)(TEMPLATE_VECTOR* vec);
 IFn(TEMPLATE_VECTOR, T*,   end)(TEMPLATE_VECTOR* vec);
+IFn(TEMPLATE_VECTOR, const T*,   cbegin)(const TEMPLATE_VECTOR* vec);
+IFn(TEMPLATE_VECTOR, const T*,   cend)(const TEMPLATE_VECTOR* vec);
 IFn(TEMPLATE_VECTOR, T*,   at)(TEMPLATE_VECTOR* vec, size_t idx);
-IFn(TEMPLATE_VECTOR, T,    get)(TEMPLATE_VECTOR* vec, size_t idx);
+IFn(TEMPLATE_VECTOR, const T*,   cat)(const TEMPLATE_VECTOR* vec, size_t idx);
+IFn(TEMPLATE_VECTOR, T,    get)(const TEMPLATE_VECTOR* vec, size_t idx);
 IFn(TEMPLATE_VECTOR, void, set)(TEMPLATE_VECTOR* vec, size_t idx, T value);
-IFn(TEMPLATE_VECTOR, bool, empty)(TEMPLATE_VECTOR* vec);
-IFn(TEMPLATE_VECTOR, size_t, size)(TEMPLATE_VECTOR* vec);
+IFn(TEMPLATE_VECTOR, bool, empty)(const TEMPLATE_VECTOR* vec);
+IFn(TEMPLATE_VECTOR, size_t, size)(const TEMPLATE_VECTOR* vec);
 
 // Define
 IFn(TEMPLATE_VECTOR, TEMPLATE_VECTOR*, new)() {
@@ -96,6 +99,14 @@ IFn(TEMPLATE_VECTOR, T*, end)(TEMPLATE_VECTOR* vec) {
   return vec->data + vec->length;
 }
 
+IFn(TEMPLATE_VECTOR, const T*, cbegin)(const TEMPLATE_VECTOR* vec) {
+  return vec->data;
+}
+
+IFn(TEMPLATE_VECTOR, const T*, cend)(const TEMPLATE_VECTOR* vec) {
+  return vec->data + vec->length;
+}
+
 IFn(TEMPLATE_VECTOR, T*, at)(TEMPLATE_VECTOR* vec, size_t idx) {
   if (idx < vec->length) {
     return vec->data + idx;
@@ -103,19 +114,26 @@ IFn(TEMPLATE_VECTOR, T*, at)(TEMPLATE_VECTOR* vec, size_t idx) {
   return NULL;
 }
 
-IFn(TEMPLATE_VECTOR, T, get)(TEMPLATE_VECTOR* vec, size_t idx) {
-  return *Method(TEMPLATE_VECTOR, at)(vec, idx);
+IFn(TEMPLATE_VECTOR, const T*, cat)(const TEMPLATE_VECTOR* vec, size_t idx) {
+  if (idx < vec->length) {
+    return vec->data + idx;
+  }
+  return NULL;
+}
+
+IFn(TEMPLATE_VECTOR, T, get)(const TEMPLATE_VECTOR* vec, size_t idx) {
+  return *Method(TEMPLATE_VECTOR, cat)(vec, idx);
 }
 
 IFn(TEMPLATE_VECTOR, void, set)(TEMPLATE_VECTOR* vec, size_t idx, T value) {
   *Method(TEMPLATE_VECTOR, at)(vec, idx) = value;
 }
 
-IFn(TEMPLATE_VECTOR, bool, empty)(TEMPLATE_VECTOR* vec) {
+IFn(TEMPLATE_VECTOR, bool, empty)(const TEMPLATE_VECTOR* vec) {
   return vec->length == 0;
 }
 
-IFn(TEMPLATE_VECTOR, size_t, size)(TEMPLATE_VECTOR* vec) {
+IFn(TEMPLATE_VECTOR, size_t, size)(const TEMPLATE_VECTOR* vec) {
   return vec->length;
 }
 

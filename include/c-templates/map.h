@@ -47,9 +47,12 @@ IFn(TEMPLATE_MAP, size_t, size)(TEMPLATE_MAP* map);
 IFn(TEMPLATE_MAP, void, put)(TEMPLATE_MAP* map, K key, V value);
 IFn(TEMPLATE_MAP, V, get)(TEMPLATE_MAP* map, const_K key);
 IFn(TEMPLATE_MAP, MAP_FIELD*, find)(TEMPLATE_MAP* map, const_K key);
-IFn(TEMPLATE_MAP, bool, contains)(TEMPLATE_MAP* map, const_K key);
+IFn(TEMPLATE_MAP, const MAP_FIELD*, cfind)(const TEMPLATE_MAP* map, const_K key);
+IFn(TEMPLATE_MAP, bool, contains)(const TEMPLATE_MAP* map, const_K key);
 IFn(TEMPLATE_MAP, MAP_FIELD*, begin)(TEMPLATE_MAP* map);
 IFn(TEMPLATE_MAP, MAP_FIELD*, end)(TEMPLATE_MAP* map);
+IFn(TEMPLATE_MAP, const MAP_FIELD*, cbegin)(const TEMPLATE_MAP* map);
+IFn(TEMPLATE_MAP, const MAP_FIELD*, cend)(const TEMPLATE_MAP* map);
 
 // Define functions
 IFn(TEMPLATE_MAP, void, init)(TEMPLATE_MAP* map) {
@@ -116,8 +119,20 @@ IFn(TEMPLATE_MAP, MAP_FIELD*, find)(TEMPLATE_MAP* map, const_K key) {
   return end;
 }
 
-IFn(TEMPLATE_MAP, bool, contains)(TEMPLATE_MAP* map, const_K key) {
-  return Method(TEMPLATE_MAP, find)(map, key) != Method(TEMPLATE_MAP, end)(map);
+IFn(TEMPLATE_MAP, const MAP_FIELD*, cfind)(const TEMPLATE_MAP* map, const_K key) {
+  const MAP_FIELD* begin = Method(MAP_FIELD_VECTOR, cbegin)(&map->data);
+  const MAP_FIELD* end = Method(MAP_FIELD_VECTOR, cend)(&map->data);
+  const MAP_FIELD* it = begin;
+  while (it < end) {
+    if (K_Equals(it->first, key))
+      return it;
+    ++it;
+  }
+  return end;
+}
+
+IFn(TEMPLATE_MAP, bool, contains)(const TEMPLATE_MAP* map, const_K key) {
+  return Method(TEMPLATE_MAP, cfind)(map, key) != Method(TEMPLATE_MAP, cend)(map);
 }
 
 IFn(TEMPLATE_MAP, MAP_FIELD*, begin)(TEMPLATE_MAP* map) {
@@ -126,6 +141,14 @@ IFn(TEMPLATE_MAP, MAP_FIELD*, begin)(TEMPLATE_MAP* map) {
 
 IFn(TEMPLATE_MAP, MAP_FIELD*, end)(TEMPLATE_MAP* map) {
   return Method(MAP_FIELD_VECTOR, end)(&map->data);
+}
+
+IFn(TEMPLATE_MAP, const MAP_FIELD*, cbegin)(const TEMPLATE_MAP* map) {
+  return Method(MAP_FIELD_VECTOR, cbegin)(&map->data);
+}
+
+IFn(TEMPLATE_MAP, const MAP_FIELD*, cend)(const TEMPLATE_MAP* map) {
+  return Method(MAP_FIELD_VECTOR, cend)(&map->data);
 }
 
 #undef TEMPLATE_MAP
