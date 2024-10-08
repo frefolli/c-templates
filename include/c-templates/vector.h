@@ -31,6 +31,8 @@ IFn(TEMPLATE_VECTOR, const T*,   cbegin)(const TEMPLATE_VECTOR* vec);
 IFn(TEMPLATE_VECTOR, const T*,   cend)(const TEMPLATE_VECTOR* vec);
 IFn(TEMPLATE_VECTOR, T*,   at)(TEMPLATE_VECTOR* vec, size_t idx);
 IFn(TEMPLATE_VECTOR, const T*,   cat)(const TEMPLATE_VECTOR* vec, size_t idx);
+IFn(TEMPLATE_VECTOR, T,    front)(const TEMPLATE_VECTOR* vec);
+IFn(TEMPLATE_VECTOR, T,    back)(const TEMPLATE_VECTOR* vec);
 IFn(TEMPLATE_VECTOR, T,    get)(const TEMPLATE_VECTOR* vec, size_t idx);
 IFn(TEMPLATE_VECTOR, void, set)(TEMPLATE_VECTOR* vec, size_t idx, T value);
 IFn(TEMPLATE_VECTOR, bool, empty)(const TEMPLATE_VECTOR* vec);
@@ -119,6 +121,14 @@ IFn(TEMPLATE_VECTOR, const T*, cat)(const TEMPLATE_VECTOR* vec, size_t idx) {
     return vec->data + idx;
   }
   return NULL;
+}
+
+IFn(TEMPLATE_VECTOR, T,    front)(const TEMPLATE_VECTOR* vec) {
+  return Method(TEMPLATE_VECTOR, get)(vec, 0);
+}
+
+IFn(TEMPLATE_VECTOR, T,    back)(const TEMPLATE_VECTOR* vec) {
+  return Method(TEMPLATE_VECTOR, get)(vec, Method(TEMPLATE_VECTOR, size)(vec) - 1);
 }
 
 IFn(TEMPLATE_VECTOR, T, get)(const TEMPLATE_VECTOR* vec, size_t idx) {
